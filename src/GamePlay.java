@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,6 +32,17 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start();
+    }
+
+    public void paint(Graphics g){
+
+        //background
+        g.setColor(Color.black);
+        g.fillRect(1,1,692,592);
+
+        //drawing map
+        map.draw((Graphics2D) g);
+
     }
 
 
