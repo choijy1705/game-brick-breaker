@@ -141,6 +141,63 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        timer.start();
+        if(play){
+            if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 550, 30, 8))){
+                ballYdir = -ballYdir;
+                ballXdir = -2;
+            }else if(new Rectangle(ballposX, ballposY, 20,20).intersects(new Rectangle(playerX + 70, 550, 30, 8))){
+                ballYdir = -ballYdir;
+                ballXdir = ballXdir + 1;
+            }else if(new Rectangle(ballposX, ballposY, 20,20).intersects(new Rectangle(playerX+30,550, 40, 8))){
+                ballYdir = -ballYdir;
+            }
+
+            A:for(int i=0;i<map.map.length;i++){
+                for(int j=0;j<map.map[0].length;j++){
+                    if(map.map[i][j]>0){
+                        //scores++
+                        int brickX = j * map.brickWidth + 80;
+                        int brickY = i * map.brickHeight + 50;
+                        int brickWidth = map.brickWidth;
+                        int brickHeight = map.brickHeight;
+
+                        Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+                        Rectangle ballRect = new Rectangle(ballposX, ballposY, 20,20);
+                        Rectangle brickRect = rect;
+
+                        if(ballRect.intersects(brickRect)){
+                            map.setBrickValue(0,i,j);
+                            score += 5;
+                            totalBricks--;
+
+                            if(ballposX + 19 <= brickRect.x || ballposX +1 >= brickRect.x + brickRect.width){
+                                ballXdir = -ballXdir;
+                            }else{
+                                ballYdir = -ballYdir;
+                            }
+
+                            break A;
+                        }
+                    }
+                }
+            }
+
+            ballposX += ballXdir;
+            ballposY += ballYdir;
+
+            if(ballposX < 0){
+                ballXdir = -ballXdir;
+            }
+            if(ballposY < 0){
+                ballYdir = -ballYdir;
+            }
+            if(ballposX > 670){
+                ballXdir = -ballXdir;
+            }
+            repaint();
+        }
+
 
 
     }
