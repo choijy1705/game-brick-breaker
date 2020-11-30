@@ -43,8 +43,61 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         //drawing map
         map.draw((Graphics2D) g);
 
+        //borders
+        g.setColor(Color.yellow);
+        g.fillRect(0,0,3,592);
+        g.fillRect(0,0,692,3);
+        g.fillRect(691,0,3,592);
+
+        //the scores
+        g.setColor(Color.white);
+        g.setFont(new Font("serif",Font.BOLD, 25));
+        g.drawString(""+score, 590,30);
+
+        //the paddle
+        g.setColor(Color.green);
+        g.fillRect(playerX, 550, 100, 8);
+
+        //the ball
+        g.setColor(Color.yellow);
+        g.fillOval(ballposX, ballposY, 20, 20);
+
+        //게임 이겼을 경우
+        if(totalBricks<=0){
+            play = false;
+            ballXdir = 0;
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif",Font.BOLD, 30));
+            g.drawString("You won", 260, 300);
+
+
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif",Font.BOLD, 20));
+            g.drawString("Press (Enter) to Restart", 230, 350);
+        }
+
+        //게임 졌을 경우
+        if(ballposY > 570){
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif",Font.BOLD,30));
+            g.drawString("Game Over, Scores : " + score, 190, 300);
+
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif",Font.BOLD,20));
+            g.drawString("Press (Enter) to Restart",230, 350);
+        }
+
+        g.dispose();
     }
 
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,11 +106,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
 
     }
 
